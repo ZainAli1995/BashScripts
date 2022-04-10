@@ -89,14 +89,17 @@ function interactiveMode(){
 	read -p "Enter the name of the User => " LOCAL_USERNAME
 	
 	grep -x ${LOCAL_USERNAME} /etc/passwd > /dev/null
+	
 	if [[ $? -eq 0 ]]; then
 		echo "User already exists"
-		read -p "Do you want to delete ${LOCAL_USERNAME} from the system ? [YES/NO]" ANSWER
+		read -p "Do you want to delete ${LOCAL_USERNAME} from the system ? [YES/NO] " ANSWER
+		
 		if [[ ${ANSWER} = 'YES' ]]; then
 			removeUser ${USERNAME}
+		
 		elif [[ ${ANSWER} = 'NO' ]]; then
-			read -p "Do you want information about the user ? [YES/NO]" ANSWER_TWO
-			if [[ ${ANSWER_TWO = 'YES' ]]; then
+			read -p "Do you want information about the user ? [YES/NO] " ANSWER_TWO
+			if [[ ${ANSWER_TWO} = 'YES' ]]; then
 				getUserInfo ${LOCAL_USERNAME}
 			else
 				echo "Sorry I cannot help you further !!!"
@@ -109,8 +112,10 @@ function interactiveMode(){
 			userAdd ${LOCAL_USERNAME}
 		else
 			echo "Sorry I cannot help you further !!!"
+			exit 1
 		fi
 	fi
+	
 	exit 0
 }
 
@@ -156,11 +161,11 @@ while [ $# -gt 0 ]; do
 done
 
 if [[ ${GET_USER_INFO} = 'true' ]]; then
-	getUserInfo '${GET_USERNAME}'
+	getUserInfo ${GET_USERNAME}
 fi
 
 if [[ ${REMOVE_USER} = 'true' ]]; then
-	removeUser '${USERNAME}
+	removeUser ${USERNAME}
 fi
 
 if [[ -f ${FILE_NAME} ]]; then
