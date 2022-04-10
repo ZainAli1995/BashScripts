@@ -1,0 +1,8 @@
+./addUsers -u testuser1
+Issues:
+
+fix addUsers to allow adding a user directly through the command line
+for example:
+
+./addUser testuser1
+./addUser -c "Comment adding" -m testuser1
